@@ -1,0 +1,31 @@
+version: '3'
+services:
+  pat:
+    image: la5nta/pat:latest
+    user: 1000:1000
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - "./data/pat:/app/pat"
+    environment:
+      - "PAT_MYCALL="
+      - "PAT_LOCATOR="
+      - "PAT_ARDOP_ADDR=ardopc:8515"
+      - "PAT_AGWPE_ADDR=direwolf:8000"
+      - "PAT_HAMLIB_RIGS_dummy=rigctld-dummy:4532"
+  ardopc:
+    build: ./.services/ardopc
+    environment:
+      - DEVNAME=hw:1,0,1
+      - LEADERLENGTH=200
+    devices:
+      - /dev/snd
+  direwolf:
+    build: ./.services/direwolf
+    environment:
+      - DEVNAME=plughw:1,0,1
+    devices:
+      - /dev/snd
+  rigctld-dummy:
+    build: ./.services/hamlib
+    command: -m 1
