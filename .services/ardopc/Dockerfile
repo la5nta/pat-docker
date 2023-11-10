@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bookworm-slim
 RUN apt-get update && apt-get install --yes git libasound2-dev build-essential
 
 WORKDIR /src

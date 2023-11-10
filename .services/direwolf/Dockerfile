@@ -1,5 +1,6 @@
-FROM debian:bookworm
-RUN apt-get update && apt-get install --yes git libasound2-dev build-essential libudev-dev cmake gettext-base
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install --yes git libasound2-dev build-essential
+RUN apt-get install --yes libudev-dev cmake gettext-base
 
 WORKDIR /src
 RUN git clone https://www.github.com/wb2osz/direwolf
