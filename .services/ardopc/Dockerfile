@@ -1,9 +1,10 @@
 FROM debian:bookworm
-RUN apt-get update && apt-get install --yes wget libasound2-dev build-essential unzip
+RUN apt-get update && apt-get install --yes git libasound2-dev build-essential
 
 WORKDIR /src
-RUN wget -q https://www.cantab.net/users/john.wiseman/Downloads/Beta/ARDOPProjects.zip && unzip ARDOPProjects.zip
-RUN cd ARDOPProjects/ARDOPC && make
+RUN git clone https://github.com/g8bpq/ardop
+RUN cd ardop/ARDOPC && make && install ardopc /usr/local/bin/ardopc
 
 WORKDIR /run
-ENTRYPOINT /src/ARDOPProjects/ARDOPC/ardopc 8515 $DEVNAME $DEVNAME --leaderlength=$LEADERLENGTH -L
+EXPOSE 8515 8516
+ENTRYPOINT ardopc 8515 $DEVNAME $DEVNAME --leaderlength=$LEADERLENGTH -L
