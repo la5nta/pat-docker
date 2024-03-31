@@ -16,8 +16,7 @@ services:
   ardopc:
     build: ./.services/ardopc
     environment:
-      - DEVNAME=hw:1,0,1
-      - LEADERLENGTH=200
+      - DEVNAME=plughw:1,0,1
     devices:
       - /dev/snd
   direwolf:
