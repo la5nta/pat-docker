@@ -13,10 +13,10 @@ making it easier to control the life-cycle of the applications.
 
 ## Available services
 
-* Pat (Winlink client)
-* ARDOPc (ARDOP modem)
-* Direwolf (Packet modem)
-* rigctld (rig control)
+* [pat](https://getpat.io) (Winlink client)
+* [ardopcf](https://github.com/pflarue/ardop) (ARDOP modem)
+* [direwolf](https://github.com/wb2osz/direwolf) (Packet modem)
+* [rigctld](https://github.com/Hamlib/Hamlib) (Rig control)
 
 ## Requirements
 
@@ -49,4 +49,3 @@ The compose file also provides an example for rigctld, configured in Pat as a
 rig named "dummy". You'll probably want to rename it, change the command
 arguments to match your hardware, and add a devices section to mount the
 correct tty device.
-
