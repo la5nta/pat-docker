@@ -31,14 +31,14 @@ making it easier to control the life-cycle of the applications.
 
 See `docker-compose up --help`.
 
-### Updating the docker images
+### Updating the applications
 
 ```
 # Pull hosted images (i.e. Pat)
 docker-compose pull
 
 # Re-build unhosted images (from source)
-docker-compose build --pull --no-cache
+docker-compose build
 ```
 
 ### Configuration

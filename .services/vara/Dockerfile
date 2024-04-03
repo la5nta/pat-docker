@@ -1,6 +1,6 @@
 # Using Debian Bullseye because the VARA installer segfaults with newer WINE versions
 FROM debian:bullseye-slim as installer
-RUN apt-get -qq update && apt-get install --yes curl wget libasound2-dev xvfb xterm gettext-base p7zip-full cabextract unzip libarchive-tools
+RUN apt-get -qq update && apt-get install --yes curl wget libasound2-dev xvfb xterm gettext-base p7zip-full cabextract unzip
 RUN dpkg --add-architecture i386 && apt-get -qq update && apt-get install --yes wine32
 
 ENV WINEARCH=win32
@@ -20,6 +20,8 @@ ADD install.ahk install.ahk
 
 WORKDIR /src/vara
 ARG VARA_PRODUCTS_URL=https://downloads.winlink.org/VARA%20Products/
+# Bust cache if the source URL is updated
+ADD ${VARA_PRODUCTS_URL} index.html
 RUN wget --no-parent -r -nd -l1 -A 'VARA HF*.zip,VARA FM*.zip' ${VARA_PRODUCTS_URL}
 RUN 7z e VARA\ HF*.zip && 7z e VARA\ FM*.zip
 RUN stat "VARA setup (Run as Administrator).exe" > /dev/null
