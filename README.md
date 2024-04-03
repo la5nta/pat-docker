@@ -25,13 +25,27 @@ making it easier to control the life-cycle of the applications.
 * Docker + Docker Compose
 * Linux is recommended when using software modems
 
-## Quick start guide 
+## Quick start guide
 
 ### Starting and stopping services
 
-See `docker-compose up --help`.
+```
+# Start Pat and ARDOP (in detached/background mode)
+docker-compose up -d pat ardop
 
-### Updating the applications
+# Stream log output of all running containers
+docker-compose logs -f
+
+# Print status of all running/stopped containers
+docker-compose ps -a
+
+# Stop running containers
+docker-compose stop
+```
+
+Run `docker-compose help` for more details.
+
+### Updating images (app installations)
 
 ```
 # Pull hosted images (i.e. Pat)
@@ -45,7 +59,7 @@ docker-compose build
 
 Edit docker-compose.yml to suite your needs. As a bare minimum you should set
 the environment variables `PAT_MYCALL` and `PAT_LOCATOR`, and possibly
-`DEVNAME` to specify which soundcard to use with ardopc/direwolf.
+`DEVNAME` to specify which soundcard to use with ardopc/direwolf/vara.
 
 The compose file also provides an example for rigctld, configured in Pat as a
 rig named "dummy". You'll probably want to rename it, change the command
