@@ -13,6 +13,8 @@ services:
       - "PAT_SECURELOGINPASSWORD="
       - "PAT_ARDOP_ADDR=ardop:8515"
       - "PAT_AGWPE_ADDR=direwolf:8000"
+      - "PAT_VARAHF_ADDR=varahf:8300"
+      - "PAT_VARAFM_ADDR=varafm:8300"
       - "PAT_HAMLIB_RIGS_dummy=rigctld-dummy:4532"
   ardop:
     build: ./.services/ardopcf
@@ -29,3 +31,21 @@ services:
   rigctld-dummy:
     build: ./.services/hamlib
     command: -m 1
+  varafm:
+    build: ./.services/vara
+    environment:
+      - CARD=1
+      - DEVICE=0
+      - SUBDEVICE=0
+    devices:
+      - /dev/snd
+    entrypoint: varafm
+  varahf:
+    build: ./.services/vara
+    environment:
+      - CARD=1
+      - DEVICE=0
+      - SUBDEVICE=0
+    devices:
+      - /dev/snd
+    entrypoint: varahf

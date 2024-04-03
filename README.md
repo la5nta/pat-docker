@@ -16,6 +16,8 @@ making it easier to control the life-cycle of the applications.
 * [pat](https://getpat.io) (Winlink client)
 * [ardopcf](https://github.com/pflarue/ardop) (ARDOP modem)
 * [direwolf](https://github.com/wb2osz/direwolf) (Packet modem)
+* [varahf](https://rosmodem.wordpress.com) (VARA HF modem, propriatery)
+* [varafm](https://rosmodem.wordpress.com) (VARA FM modem, propriatery)
 * [rigctld](https://github.com/Hamlib/Hamlib) (Rig control)
 
 ## Requirements

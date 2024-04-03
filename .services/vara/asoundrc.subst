@@ -1,0 +1,13 @@
+pcm.!default {
+	type hw
+	card ${CARD}
+	device ${DEVICE}
+	subdevice ${SUBDEVICE}
+}
+
+ctl.!default {
+	type hw
+	card ${CARD}
+	device ${DEVICE}
+	subdevice ${SUBDEVICE}
+}
