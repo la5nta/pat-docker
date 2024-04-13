@@ -17,21 +17,25 @@ services:
       - "PAT_VARAFM_ADDR=varafm:8300"
       - "PAT_HAMLIB_RIGS_dummy=rigctld-dummy:4532"
   ardop:
+    image: ardopcf
     build: ./.services/ardopcf
     environment:
       - DEVNAME=plughw:1,0,1
     devices:
       - /dev/snd
   direwolf:
+    image: direwolf
     build: ./.services/direwolf
     environment:
       - DEVNAME=plughw:1,0,1
     devices:
       - /dev/snd
   rigctld-dummy:
+    image: hamlib
     build: ./.services/hamlib
     command: -m 1
   varafm:
+    image: vara
     build: ./.services/vara
     environment:
       - CARD=1
@@ -41,6 +45,7 @@ services:
       - /dev/snd
     entrypoint: varafm
   varahf:
+    image: vara
     build: ./.services/vara
     environment:
       - CARD=1
