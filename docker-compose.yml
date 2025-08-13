@@ -13,6 +13,8 @@ services:
       - "PAT_VARAHF_ADDR=varahf:8300"
       - "PAT_VARAFM_ADDR=varafm:8300"
       - "PAT_HAMLIB_RIGS_dummy=rigctld-dummy:4532"
+      - PAT_PREDICTION_ENGINE=voacap-api
+      - PAT_PREDICTION_VOACAPAPI_BASEURL="http://voacap:8080"
   ardop:
     image: ardopcf
     build: ./.services/ardopcf
@@ -51,3 +53,5 @@ services:
     devices:
       - /dev/snd
     entrypoint: varahf
+  voacap:
+    build: ./.services/voacap
