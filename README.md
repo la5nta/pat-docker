@@ -57,9 +57,10 @@ docker-compose build
 
 ### Configuration
 
-Edit docker-compose.yml to suite your needs. As a bare minimum you should set
-the environment variables `PAT_MYCALL` and `PAT_LOCATOR`, and possibly
-`DEVNAME` to specify which soundcard to use with ardopc/direwolf/vara.
+The most convenient method to configure Pat is though the web gui. For more
+advanced configuration, edit docker-compose.yml to suite your needs. You'll
+probably need to change `DEVNAME` to specify which soundcard to use with
+ardopc/direwolf/vara.
 
 The compose file also provides an example for rigctld, configured in Pat as a
 rig named "dummy". You'll probably want to rename it, change the command

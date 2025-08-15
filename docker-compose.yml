@@ -8,9 +8,6 @@ services:
     volumes:
       - "./data/pat:/app/pat"
     environment:
-      - "PAT_MYCALL="
-      - "PAT_LOCATOR="
-      - "PAT_SECURELOGINPASSWORD="
       - "PAT_ARDOP_ADDR=ardop:8515"
       - "PAT_AGWPE_ADDR=direwolf:8000"
       - "PAT_VARAHF_ADDR=varahf:8300"
