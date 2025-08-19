@@ -33,6 +33,11 @@ services:
     image: hamlib
     build: ./.services/hamlib
     command: -m 1
+  gpsd:
+    image: gpsd
+    build: ./.services/gpsd
+    devices:
+      - "/dev/change-me:/dev/gps"
   varafm:
     image: vara
     build: ./.services/vara

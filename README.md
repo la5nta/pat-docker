@@ -20,6 +20,7 @@ making it easier to control the life-cycle of the applications.
 * [varafm](https://rosmodem.wordpress.com) (VARA FM modem, propriatery)
 * [rigctld](https://github.com/Hamlib/Hamlib) (Rig control)
 * [voacapl](https://github.com/jawatson/voacapl) (HF propagation prediction)
+* [gpsd](https://gpsd.gitlab.io/gpsd/) (GNSS source)
 
 ## Requirements
 
