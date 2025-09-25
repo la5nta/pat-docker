@@ -47,28 +47,13 @@ func (s *VoacapServer) handleVersion(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Failed to get version: %v", err), http.StatusInternalServerError)
 		return
 	}
-
 	w.Header().Set("Content-Type", "text/plain")
-	w.WriteHeader(http.StatusOK)
 	w.Write(bytes.TrimSpace(output))
 }
 
 func (s *VoacapServer) handlePredict(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	// Read input data from request body
-	inputData, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to read request body: %v", err), http.StatusBadRequest)
-		return
-	}
-	defer r.Body.Close()
-
-	if len(inputData) == 0 {
-		http.Error(w, "Empty request body", http.StatusBadRequest)
 		return
 	}
 
@@ -80,43 +65,42 @@ func (s *VoacapServer) handlePredict(w http.ResponseWriter, r *http.Request) {
 	}
 	defer os.RemoveAll(runDir)
 
-	// Write input file
-	inputPath := filepath.Join(runDir, "input.dat")
-	if err := os.WriteFile(inputPath, inputData, 0644); err != nil {
-		http.Error(w, fmt.Sprintf("Failed to write input file: %v", err), http.StatusInternalServerError)
+	// Write request body as input file
+	in, err := os.OpenFile(filepath.Join(runDir, "input.dat"), os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to create input file: %v", err), http.StatusInternalServerError)
 		return
 	}
+	defer in.Close()
+	switch n, err := io.Copy(in, r.Body); {
+	case err != nil:
+		http.Error(w, fmt.Sprintf("Failed to read request body: %v", err), http.StatusBadRequest)
+		return
+	case n == 0:
+		http.Error(w, "Empty request body", http.StatusBadRequest)
+		return
+	}
+	in.Close()
 
 	// Execute VOACAP
-	outputPath := filepath.Join(runDir, "output.out")
-	args := []string{
-		"--run-dir=" + runDir,
-		s.dataDir,
-		"input.dat",
-		"output.out",
-	}
-
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
 	defer cancel()
-
+	args := []string{"--run-dir=" + runDir, s.dataDir, "input.dat", "output.out"}
 	cmd := exec.CommandContext(ctx, "voacapl", args...)
 	cmd.Dir = runDir
-
 	if output, err := cmd.CombinedOutput(); err != nil {
 		log.Printf("VOACAP execution failed: %v\nOutput: %s", err, string(output))
 		http.Error(w, fmt.Sprintf("VOACAP execution failed: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Read output file
-	outputData, err := os.ReadFile(outputPath)
+	// Write output as response
+	out, err := os.Open(filepath.Join(runDir, "output.out"))
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to read output file: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	// Return output data
+	defer out.Close()
 	w.Header().Set("Content-Type", "text/plain")
-	w.WriteHeader(http.StatusOK)
-	w.Write(outputData)
+	io.Copy(w, out)
 }
